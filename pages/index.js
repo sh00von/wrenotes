@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect,useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import * as AccordionPrimitive from '@radix-ui/react-accordion'
 import { ScrollArea } from '@/components/ui/scroll-area'
@@ -8,81 +8,63 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { FileIcon, BookOpen, GraduationCap, Menu, X, Droplet, Mail, Building, ChevronRight, Search } from 'lucide-react'
 
-const courseData = [
-  {
-    "level": 1,
-    "terms": [
-      {
-        "name": "Term 1",
-        "subjects": [
-          {
-            "name": "Hydrology",
-            "notes": [
-              { "title": "Introduction to Hydrology", "url": "https://drive.google.com/file/d/..." },
-              { "title": "Hydrologic Cycle", "url": "https://drive.google.com/file/d/..." }
-            ]
-          },
-          {
-            "name": "Hydraulic Structures Mechanics",
-            "notes": [
-              { "title": "Fluid Mechanics Basics", "url": "https://drive.google.com/file/d/..." },
-              { "title": "Bernoulli's Principle", "url": "https://drive.google.com/file/d/..." }
-            ]
-          }
-        ]
-      },
-      {
-        "name": "Term 2",
-        "subjects": [
-          {
-            "name": "Water Resources Management",
-            "notes": [
-              { "title": "Introduction to Water Resources", "url": "https://drive.google.com/file/d/..." },
-              { "title": "Water Conservation Techniques", "url": "https://drive.google.com/file/d/..." }
-            ]
-          },
-          {
-            "name": "Hydraulic Structures",
-            "notes": [
-              { "title": "Dams and Reservoirs", "url": "https://drive.google.com/file/d/..." },
-              { "title": "Spillways and Gates", "url": "https://drive.google.com/file/d/..." }
-            ]
-          }
-        ]
-      }
-    ]
-  }
-]
 
-const departmentData = {
-  name: "Department of Water Resources and Civil Engineering",
-  description: "Our department is dedicated to advancing the fields of water resources and civil engineering through cutting-edge research and comprehensive education.",
-  faculty: [
-    {
-      name: "Dr. Jane Smith",
-      title: "Professor and Department Chair",
-      email: "jane.smith@university.edu",
-      bio: "Dr. Smith has over 20 years of experience in hydraulic engineering and water resource management.",
-      researchInterests: ["Sustainable water management", "Climate change impacts on water resources", "Urban water systems"]
-    },
-    {
-      name: "Dr. Michael Johnson",
-      title: "Associate Professor",
-      email: "michael.johnson@university.edu",
-      bio: "Dr. Johnson specializes in hydrological modeling and has contributed to numerous international water conservation projects.",
-      researchInterests: ["Hydrological modeling", "Flood risk assessment", "Water quality monitoring"]
-    }
-  ]
-}
 
 const WaveBackground = () => (
-  <div className="fixed inset-0 z-0 opacity-10">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="w-full h-full">
-      <path fill="currentColor" fillOpacity="1" d="M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,213.3C672,192,768,128,864,128C960,128,1056,192,1152,213.3C1248,235,1344,213,1392,202.7L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
-    </svg>
+
+<div className="fixed inset-0 z-0 ">
+      <svg    ref={waveRef}
+    
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 1440 320"
+        className="w-full h-full"
+        preserveAspectRatio="none"
+      >
+        <path
+          d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+          fill="none"
+          stroke="rgba(59, 130, 246, 0.3)"
+          strokeWidth="2"
+        />
+        <path
+          d="M0,256L48,234.7C96,213,192,171,288,165.3C384,160,480,192,576,213.3C672,235,768,245,864,234.7C960,224,1056,192,1152,181.3C1248,171,1344,181,1392,186.7L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+          fill="none"
+          stroke="rgba(59, 130, 246, 0.5)"
+          strokeWidth="2"
+        />
+        <path
+          d="M0,128L48,138.7C96,149,192,171,288,186.7C384,203,480,213,576,208C672,203,768,181,864,181.3C960,181,1056,203,1152,213.3C1248,224,1344,224,1392,224L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+          fill="rgba(59, 130, 246, 0.2)"
+        />
+      </svg>
+    </div>
+)
+const BubbleAnimation = () => (
+  <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    {[...Array(10)].map((_, i) => (
+      <motion.div
+        key={i}
+        className="absolute bg-blue-500 rounded-full opacity-30"
+        style={{
+          width: Math.random() * 50 + 10,
+          height: Math.random() * 50 + 10,
+          left: `${Math.random() * 100}%`,
+          top: `${Math.random() * 100}%`,
+        }}
+        animate={{
+          y: [0, -1000],
+          opacity: [0.3, 0],
+        }}
+        transition={{
+          duration: Math.random() * 10 + 20,
+          repeat: Infinity,
+          repeatType: 'loop',
+          ease: 'linear',
+        }}
+      />
+    ))}
   </div>
 )
-
 const Accordion = AccordionPrimitive.Root
 const AccordionItem = AccordionPrimitive.Item
 const AccordionTrigger = React.forwardRef(({ children, className, ...props }, forwardedRef) => (
@@ -116,6 +98,27 @@ export default function WaterResourcesEngineering() {
   const [activeLevelTerm, setActiveLevelTerm] = useState(null)
   const [searchTerm, setSearchTerm] = useState("")
   const [openAccordions, setOpenAccordions] = useState([])
+  const [courseData, setCourseData] = useState([])  // API course data state
+  const [departmentData, setDepartmentData] = useState(null) // API department data state
+  const [loading, setLoading] = useState(true) // loading state
+  const [error, setError] = useState(null) // error state
+    const waveRef = useRef(null); // Removed TypeScript type annotation
+  
+    useEffect(() => {
+      const animate = () => {
+        const time = Date.now() * 0.002;
+        if (waveRef.current) {
+          const paths = waveRef.current.querySelectorAll('path');
+          paths.forEach((path, index) => {
+            const length = path.getTotalLength();
+            path.setAttribute('stroke-dasharray', `${length} ${length}`);
+            path.setAttribute('stroke-dashoffset', (length * (time + index * 0.5) % length).toString());
+          });
+        }
+        requestAnimationFrame(animate);
+      };
+      animate();
+    }, []);
 
   useEffect(() => {
     const checkIsMobile = () => {
@@ -129,6 +132,32 @@ export default function WaterResourcesEngineering() {
     window.addEventListener('resize', checkIsMobile)
     return () => window.removeEventListener('resize', checkIsMobile)
   }, [])
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true)
+      setError(null)
+      try {
+        // Fetch course data
+        const courseResponse = await fetch('/api/courses')  // Replace with your API endpoint
+        const courseData = await courseResponse.json()
+        console.log('Fetched Course Data:', courseData) // Debugging: Check the structure
+        setCourseData(courseData)
+  
+        // Fetch department data
+        const departmentResponse = await fetch('/api/department')  // Replace with your API endpoint
+        const departmentData = await departmentResponse.json()
+        setDepartmentData(departmentData)
+  
+      } catch (err) {
+        setError('Failed to load data')
+      } finally {
+        setLoading(false)
+      }
+    }
+  
+    fetchData()
+  }, [])
+  
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen)
 
@@ -152,8 +181,34 @@ export default function WaterResourcesEngineering() {
 
   return (
     <div className="flex h-screen bg-gradient-to-br from-blue-900 to-blue-700 text-blue-100 font-sans relative overflow-hidden">
-      <WaveBackground />
-      
+
+<div className="fixed inset-0 z-0 ">
+      <svg    ref={waveRef}
+    
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 1440 320"
+        className="w-full h-full"
+        preserveAspectRatio="none"
+      >
+        <path
+          d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+          fill="none"
+          stroke="rgba(59, 130, 246, 0.3)"
+          strokeWidth="2"
+        />
+        <path
+          d="M0,256L48,234.7C96,213,192,171,288,165.3C384,160,480,192,576,213.3C672,235,768,245,864,234.7C960,224,1056,192,1152,181.3C1248,171,1344,181,1392,186.7L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+          fill="none"
+          stroke="rgba(59, 130, 246, 0.5)"
+          strokeWidth="2"
+        />
+        <path
+          d="M0,128L48,138.7C96,149,192,171,288,186.7C384,203,480,213,576,208C672,203,768,181,864,181.3C960,181,1056,203,1152,213.3C1248,224,1344,224,1392,224L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+          fill="rgba(59, 130, 246, 0.2)"
+        />
+      </svg>
+    </div>
+      <BubbleAnimation />
       {/* Mobile menu button */}
       {isMobile && (
         <motion.button
