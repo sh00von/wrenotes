@@ -6,7 +6,7 @@ import * as AccordionPrimitive from '@radix-ui/react-accordion'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { FileIcon, BookOpen, GraduationCap, Menu, X, Droplet, Mail, Building, ChevronRight, Search } from 'lucide-react'
+import { FileIcon,ArrowDownToDot, BookOpen, GraduationCap, Menu, X, Droplet, Mail, Building, ChevronRight, Search } from 'lucide-react'
 
 
 
@@ -39,32 +39,40 @@ const WaveBackground = () => (
       </svg>
     </div>
 )
+
 const BubbleAnimation = () => (
   <div className="absolute inset-0 overflow-hidden pointer-events-none">
-    {[...Array(10)].map((_, i) => (
-      <motion.div
-        key={i}
-        className="absolute bg-blue-500 rounded-full opacity-30"
-        style={{
-          width: Math.random() * 50 + 10,
-          height: Math.random() * 50 + 10,
-          left: `${Math.random() * 100}%`,
-          top: `${Math.random() * 100}%`,
-        }}
-        animate={{
-          y: [0, -1000],
-          opacity: [0.3, 0],
-        }}
-        transition={{
-          duration: Math.random() * 10 + 20,
-          repeat: Infinity,
-          repeatType: 'loop',
-          ease: 'linear',
-        }}
-      />
-    ))}
+    {[...Array(10)].map((_, i) => {
+      // Generate random size for each bubble
+      const size = Math.random() * 50 + 10; // Size between 10px and 60px
+      return (
+        <motion.div
+          key={i}
+          className="absolute rounded-full opacity-60 shadow-lg"
+          style={{
+            width: size,
+            height: size,
+            left: `${Math.random() * 100}%`,
+            bottom: 0,
+            background: `radial-gradient(circle, rgba(59, 130, 246, 0.6), rgba(29, 78, 216, 0.3))`,
+          }}
+          animate={{
+            y: [0, -1000], // Move upwards
+            opacity: [0.3, 0], // Fade out
+            scale: [1, Math.random() * 0.5 + 0.5], // Optional scaling effect
+          }}
+          transition={{
+            duration: Math.random() * 10 + 10, // Random duration
+            repeat: Infinity,
+            repeatType: 'loop',
+            ease: 'easeInOut',
+          }}
+        />
+      );
+    })}
   </div>
-)
+);
+
 const Accordion = AccordionPrimitive.Root
 const AccordionItem = AccordionPrimitive.Item
 const AccordionTrigger = React.forwardRef(({ children, className, ...props }, forwardedRef) => (
@@ -271,7 +279,7 @@ export default function WaterResourcesEngineering() {
                                   whileHover={{ scale: 1.05 }}
                                   whileTap={{ scale: 0.95 }}
                                 >
-                                  <BookOpen className="inline-block mr-2 w-4 h-4" />
+                                  <ArrowDownToDot className="inline-block mr-2 w-4 h-4" />
                                   {term.name}
                                 </motion.button>
                               ))}
@@ -332,7 +340,7 @@ export default function WaterResourcesEngineering() {
                         {level.terms.map((term, termIndex) => (
                           <AccordionItem value={`term-${termIndex}`} key={termIndex} className="mb-2">
                             <AccordionTrigger className="text-lg font-medium text-blue-200 hover:text-blue-100 bg-blue-600 bg-opacity-50 p-3 rounded-t">
-                              <BookOpen className="w-5 h-5 mr-2" />
+                            <ArrowDownToDot className="w-5 h-5 mr-2" />
                               {term.name}
                             </AccordionTrigger>
                             <AccordionContent className="bg-blue-700 bg-opacity-50 rounded-b p-3">
