@@ -188,7 +188,7 @@ export default function WaterResourcesEngineering() {
   }
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-blue-900 to-blue-700 text-blue-100 font-sans relative overflow-hidden">
+    <div className="flex h-screen bg-gradient-to-br from-blue-900 to-blue-800 text-blue-100 font-sans relative overflow-hidden">
 
 <div className="fixed inset-0 z-0 ">
       <svg    ref={waveRef}

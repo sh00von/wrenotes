@@ -90,3 +90,16 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 10px;
+}
+ 
+::-webkit-scrollbar-track {
+    background-color: #03218b;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #dddddd; 
+}
