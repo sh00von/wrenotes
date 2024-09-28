@@ -1,13 +1,14 @@
 import jwt from 'jsonwebtoken';
 import { serialize } from 'cookie';
 
-const SECRET_KEY = process.env.JWT_SECRET_KEY || 'your-secret-key'; // Use env variable for production
+const SECRET_KEY = process.env.JWT_SECRET_KEY; // Use env variable for production
+const VALID_PINS = process.env.VALID_PINS ? process.env.VALID_PINS.split(',') : []; // Array of valid PINs
 
 export default function handler(req, res) {
   const { pin } = req.body;
 
-  // Dummy PIN check, replace with your actual logic
-  if (pin === '1234') {
+  // Check if the provided PIN is in the list of valid PINs
+  if (VALID_PINS.includes(pin)) {
     // Create JWT token
     const token = jwt.sign({ user: 'admin' }, SECRET_KEY, { expiresIn: '1h' });
 

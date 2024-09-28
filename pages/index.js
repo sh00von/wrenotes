@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { FileIcon,ArrowDownToDot, BookOpen, GraduationCap, Menu, X, Droplet, Mail, Building, ChevronRight, Search } from 'lucide-react'
 
+import SEO from '@/components/SEO';
 
 
 const WaveBackground = () => (
@@ -188,8 +189,14 @@ export default function WaterResourcesEngineering() {
   }
 
   return (
+    
     <div className="flex h-screen bg-gradient-to-br from-blue-900 to-blue-800 text-blue-100 font-sans relative overflow-hidden">
-
+  <SEO
+        title="WRE Materials - Made By Shovon"
+        description="This website is for organizing the notes of Water Resources Engineering - CUET "
+        ogImage="https://example.com/path/to/your/image.jpg"
+        favicon="/favicon.ico" // Ensure your favicon is in the public directory
+      />
 <div className="fixed inset-0 z-0 ">
       <svg    ref={waveRef}
     
@@ -253,66 +260,68 @@ export default function WaterResourcesEngineering() {
                 className="w-full bg-blue-700 text-blue-100 placeholder-blue-300 border-blue-600"
               />
             </div>
-            <ScrollArea className="h-[calc(100vh-180px)]">
-              <nav className="px-4 py-2">
-                <Accordion type="single" collapsible className="w-full">
-                  <AccordionItem value="courses">
-                    <AccordionTrigger className="text-blue-100 hover:text-blue-200">
-                      <GraduationCap className="inline-block mr-2 w-5 h-5" />
-                      Courses
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      {filteredCourseData.map((level) => (
-                        <Accordion type="single" collapsible key={level.level} className="ml-4">
-                          <AccordionItem value={`level-${level.level}`}>
-                            <AccordionTrigger className="text-blue-200 hover:text-blue-100">
-                              Level {level.level}
-                            </AccordionTrigger>
-                            <AccordionContent>
-                              {level.terms.map((term, termIndex) => (
-                                <motion.button
-                                  key={termIndex}
-                                  className={`w-full text-left p-2 mb-1 rounded transition-colors ${
-                                    activeLevelTerm === `${level.level}-${termIndex}` ? "bg-blue-500 text-white" : "text-blue-200 hover:bg-blue-700"
-                                  }`}
-                                  onClick={() => handleLevelTermClick(level.level, termIndex)}
-                                  whileHover={{ scale: 1.05 }}
-                                  whileTap={{ scale: 0.95 }}
-                                >
-                                  <ArrowDownToDot className="inline-block mr-2 w-4 h-4" />
-                                  {term.name}
-                                </motion.button>
-                              ))}
-                            </AccordionContent>
-                          </AccordionItem>
-                        </Accordion>
-                      ))}
-                    </AccordionContent>
-                  </AccordionItem>
-                  <AccordionItem value="department">
-                    <AccordionTrigger className="text-blue-100 hover:text-blue-200">
-                      <Building className="inline-block mr-2 w-5 h-5" />
-                      Department Info
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <motion.button
-                        className={`w-full text-left p-2 mb-1 rounded transition-colors ${
-                          activeSection === "department" ? "bg-blue-500 text-white" : "text-blue-200 hover:bg-blue-700"
-                        }`}
-                        onClick={() => {
-                          setActiveSection("department")
-                          if (isMobile) setIsSidebarOpen(false)
-                        }}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        Overview
-                      </motion.button>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-              </nav>
-            </ScrollArea>
+            <ScrollArea className="h-[calc(100vh-180px)] flex flex-col">
+  <nav className="px-4 py-2 flex-grow">
+    <Accordion type="single" collapsible className="w-full">
+      <AccordionItem value="courses">
+        <AccordionTrigger className="text-blue-100 hover:text-blue-200">
+          <GraduationCap className="inline-block mr-2 w-5 h-5" />
+          Courses
+        </AccordionTrigger>
+        <AccordionContent>
+          {filteredCourseData.map((level) => (
+            <Accordion type="single" collapsible key={level.level} className="ml-4">
+              <AccordionItem value={`level-${level.level}`}>
+                <AccordionTrigger className="text-blue-200 hover:text-blue-100">
+                  Level {level.level}
+                </AccordionTrigger>
+                <AccordionContent>
+                  {level.terms.map((term, termIndex) => (
+                    <motion.button
+                      key={termIndex}
+                      className={`w-full text-left p-2 mb-1 rounded transition-colors ${
+                        activeLevelTerm === `${level.level}-${termIndex}` ? "bg-blue-500 text-white" : "text-blue-200 hover:bg-blue-700"
+                      }`}
+                      onClick={() => handleLevelTermClick(level.level, termIndex)}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <ArrowDownToDot className="inline-block mr-2 w-4 h-4" />
+                      {term.name}
+                    </motion.button>
+                  ))}
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          ))}
+        </AccordionContent>
+      </AccordionItem>
+      <AccordionItem value="department">
+        <AccordionTrigger className="text-blue-100 hover:text-blue-200">
+          <Building className="inline-block mr-2 w-5 h-5" />
+          Department Info
+        </AccordionTrigger>
+        <AccordionContent>
+          <motion.button
+            className={`w-full text-left p-2 mb-1 rounded transition-colors ${
+              activeSection === "department" ? "bg-blue-500 text-white" : "text-blue-200 hover:bg-blue-700"
+            }`}
+            onClick={() => {
+              setActiveSection("department")
+              if (isMobile) setIsSidebarOpen(false)
+            }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Overview
+          </motion.button>
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
+  </nav>
+  {/* This paragraph is positioned at the bottom of the ScrollArea */}
+</ScrollArea>
+
           </motion.div>
         )}
       </AnimatePresence>
